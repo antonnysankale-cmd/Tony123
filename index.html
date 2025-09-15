@@ -1,0 +1,186 @@
+ChatGPT
+
+Log in
+You said:
+Can you create a school timetable for the current semester using the HTML tags I've learned? I need to include specific units for three programs: ICTM, CIS, and CCT. The classes run from Monday to Friday, from 7:00 AM to 5:00 PM, with two one-hour breaks at different times each day and the break for each day does not repeat at any other day 
+Here are the units for each program:
+ICTM:
+ * CIR 204
+ * CIM 215
+ * CIR 209
+ * CIT 201
+ * CIM 206
+CIS:
+ * CIR 207
+ * CIS 211
+ * CIT 210
+ * CIR 211
+ * CIR 203
+CCT:
+ * CIR 205
+ * CIT 209
+ * CIM 202
+ * CIR 213
+ * CCT 224
+Remember that CIR 205, CIT 211, CIM 207, and CIR 203 are common units and should be scheduled at the same time and venue for all programs. Also, each unit should only be taught once per week.
+Finally, I need to submit this work to my GitHub account by September 15, 2025.
+ChatGPT said:
+Let's break this down into manageable steps, starting with the HTML structure for the timetable. We'll focus on creating a table layout to display the classes, including the common units, and respecting the schedule and break rules.
+
+HTML Structure:
+Time Slots: From 7:00 AM to 5:00 PM, Monday through Friday.
+
+Classes: Each unit will be scheduled only once per week, and the common units should be scheduled at the same time for all programs.
+
+Breaks: Each day will have two breaks, scheduled at different times each day.
+
+Colors or styling: We can add some basic styling to make it clearer.
+
+Let's start by writing the HTML code. Here's an initial draft of the timetable:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Timetable - Semester</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #000;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        .common {
+            background-color: lightyellow;
+        }
+        .ictm {
+            background-color: lightblue;
+        }
+        .cis {
+            background-color: lightgreen;
+        }
+        .cct {
+            background-color: lightcoral;
+        }
+        .break {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>School Timetable - Semester</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Time Slot 7:00 AM to 8:00 AM -->
+            <tr>
+                <td>7:00 AM - 8:00 AM</td>
+                <td class="ictm">CIR 204</td>
+                <td class="cis">CIR 207</td>
+                <td class="cct">CIR 205</td>
+                <td class="common">CIR 205 (Common)</td>
+                <td class="ictm">CIM 215</td>
+            </tr>
+            <!-- Time Slot 8:00 AM to 9:00 AM -->
+            <tr>
+                <td>8:00 AM - 9:00 AM</td>
+                <td class="cis">CIS 211</td>
+                <td class="ictm">CIT 201</td>
+                <td class="cct">CIM 202</td>
+                <td class="common">CIR 205 (Common)</td>
+                <td class="cis">CIT 210</td>
+            </tr>
+            <!-- Time Slot 9:00 AM to 10:00 AM -->
+            <tr>
+                <td>9:00 AM - 10:00 AM</td>
+                <td class="break">Break</td>
+                <td class="cct">CIR 213</td>
+                <td class="ictm">CIM 206</td>
+                <td class="common">CIT 209 (Common)</td>
+                <td class="cis">CIR 211</td>
+            </tr>
+            <!-- Time Slot 10:00 AM to 11:00 AM -->
+            <tr>
+                <td>10:00 AM - 11:00 AM</td>
+                <td class="cis">CIR 211</td>
+                <td class="cct">CCT 224</td>
+                <td class="ictm">CIT 201</td>
+                <td class="common">CIR 205 (Common)</td>
+                <td class="cct">CIR 213</td>
+            </tr>
+            <!-- Time Slot 11:00 AM to 12:00 PM -->
+            <tr>
+                <td>11:00 AM - 12:00 PM</td>
+                <td class="break">Break</td>
+                <td class="ictm">CIR 204</td>
+                <td class="cis">CIT 210</td>
+                <td class="cct">CIM 202</td>
+                <td class="common">CIM 206 (Common)</td>
+            </tr>
+            <!-- Time Slot 12:00 PM to 1:00 PM -->
+            <tr>
+                <td>12:00 PM - 1:00 PM</td>
+                <td class="cct">CIR 205</td>
+                <td class="cis">CIR 203</td>
+                <td class="ictm">CIM 215</td>
+                <td class="common">CIT 209 (Common)</td>
+                <td class="cct">CCT 224</td>
+            </tr>
+            <!-- Time Slot 1:00 PM to 2:00 PM -->
+            <tr>
+                <td>1:00 PM - 2:00 PM</td>
+                <td class="ictm">CIM 206</td>
+                <td class="cct">CIR 213</td>
+                <td class="cis">CIS 211</td>
+                <td class="ictm">CIT 201</td>
+                <td class="cis">CIR 203</td>
+            </tr>
+            <!-- Time Slot 2:00 PM to 3:00 PM -->
+            <tr>
+                <td>2:00 PM - 3:00 PM</td>
+                <td class="break">Break</td>
+                <td class="cct">CCT 224</td>
+                <td class="ictm">CIM 215</td>
+                <td class="cis">CIT 209</td>
+                <td class="cct">CIM 202</td>
+            </tr>
+            <!-- Time Slot 3:00 PM to 4:00 PM -->
+            <tr>
+                <td>3:00 PM - 4:00 PM</td>
+                <td class="cis">CIT 210</td>
+                <td class="cct">CIR 205</td>
+                <td class="ictm">CIT 201</td>
+                <td class="common">CIR 205 (Common)</td>
+                <td class="ictm">CIR 209</td>
+            </tr>
+            <!-- Time Slot 4:00 PM to 5:00 PM -->
+            <tr>
+                <td>4:00 PM - 5:00 PM</td>
+                <td class="cct">CIR 213</td>
+                <td class="cis">CIR 207</td>
+                <td class="ictm">CIM 206</td>
+                <td class="common">CIM 206 (Common)</td>
+                <td class="cct">CCT 224</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
