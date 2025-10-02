@@ -1,6 +1,100 @@
-body{
-  padding: 25px;
+<?php
+// Database connection
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "fashion_store";
+
+$conn = new mysqli($host, $user, $pass, $db);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-.title {
-	color: #5C6AC4;
+
+// Handle purchase request
+if (isset($_POST['buy'])) {
+    $id = $_POST['id'];
+
+    // Reduce stock only if items are available
+    $check = $conn->query("SELECT * FROM inventory WHERE id=$id");
+    $item = $check->fetch_assoc();
+
+    if ($item['sold_quantity'] < $item['total_quantity']) {
+        $conn->query("UPDATE inventory SET sold_quantity = sold_quantity + 1 WHERE id=$id");
+        echo "<p style='color:green;'>You bought 1 {$item['item_name']}!</p>";
+    } else {
+        echo "<p style='color:red;'>Sorry, {$item['item_name']} is out of stock!</p>";
+    }
 }
+
+// Fetch inventory
+$result = $conn->query("SELECT * FROM inventory");
+
+// Sales summary
+$summary = $conn->query("SELECT 
+    SUM(sold_quantity) as total_sold,
+    SUM(total_quantity - sold_quantity) as stock_left,
+    SUM(sold_quantity * price) as revenue
+    FROM inventory");
+$summaryData = $summary->fetch_assoc();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fashion Store</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f8f9fa; }
+        h1 { color: #333; text-align: center; }
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+        th { background: #222; color: #fff; }
+        button { padding: 8px 12px; border: none; border-radius: 8px; background: #28a745; color: white; cursor: pointer; }
+        button:hover { background: #218838; }
+        .summary { width: 80%; margin: 20px auto; background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+<h1>Welcome to Fashion Store</h1>
+
+<table>
+    <tr>
+        <th>Item</th>
+        <th>Price (Ksh)</th>
+        <th>Total Quantity</th>
+        <th>Sold</th>
+        <th>In Stock</th>
+        <th>Action</th>
+    </tr>
+    <?php while ($row = $result->fetch_assoc()) { ?>
+    <tr>
+        <td><?php echo $row['item_name']; ?></td>
+        <td><?php echo $row['price']; ?></td>
+        <td><?php echo $row['total_quantity']; ?></td>
+        <td><?php echo $row['sold_quantity']; ?></td>
+        <td><?php echo $row['total_quantity'] - $row['sold_quantity']; ?></td>
+        <td>
+            <form method="POST">
+                <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                <button type="submit" name="buy">Buy</button>
+            </form>
+        </td>
+    </tr>
+    <?php } ?>
+</table>
+
+<div class="summary">
+    <h2>Store Sales Summary</h2>
+    <p><b>Total Items Sold:</b> <?php echo $summaryData['total_sold'] ?? 0; ?></p>
+    <p><b>Total Stock Left:</b> <?php echo $summaryData['stock_left'] ?? 0; ?></p>
+    <p><b>Total Revenue:</b> Ksh <?php echo $summaryData['revenue'] ?? 0; ?></p>
+</div>
+
+<footer style="text-align:center; margin-top:30px;">
+    <p>&copy; 2025 Fashion Store. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
